@@ -1,26 +1,53 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 
-        Perro perro1 = new Perro("Rex", 3);
-        Perro perro2 = new Perro("Milka", 2);
-        Perro perro3 = new Perro("Zoe",2);
+        Scanner sc = new Scanner(System.in);
 
-        perro1.setNivelEnergia(80);
-        perro1.setNivelHambre(20);
-        perro2.setNivelEnergia(60);
-        perro2.setNivelHambre(50);
+        Perro rex = new Perro("Rex", 3);
+        Perro milka = new Perro("Milka", 2);
+        Perro zoe = new Perro("Zoe",2);
 
-        perro1.jugar();
-        perro2.dormir();
-        perro2.comer();
-        perro3.jugar();
-        perro1.jugar();
-        perro3.dormir();
+        boolean salir = false;
+        int menu = 0;
 
-        System.out.println(perro1);
-        System.out.println(perro2);
-        System.out.println(perro3);
+        try {
+            while (!salir){
+
+                System.out.println("1. ¿Qué quieres hacer?");
+                System.out.println("2. Interactuar con rex");
+                System.out.println("3. Interactuar con zoe");
+                System.out.println("3. Interactuar con milka");
+                System.out.println("4. Ver el estado de ambos");
+                System.out.println("5. Salir");
+
+                menu = sc.nextInt();
+
+                switch (menu){
+                    case 1:
+                        rex.interactuarConPerro(rex, sc);
+                        break;
+                    case 2:
+                        milka.interactuarConPerro(milka, sc);
+                        break;
+                    case 3:
+                        zoe.interactuarConPerro(zoe,sc);
+                    case 4:
+                        System.out.println(rex);
+                        System.out.println(milka);
+                        System.out.println(zoe);
+                        break;
+                    case 5:
+                        System.out.println("Saliendo del juego...");
+                        salir = true;
+                }
+            }
+
+        }catch (IncompatibleClassChangeError e){
+            System.out.println("Tipo de dato no válido.");
+            sc.next();
+        }
+
     }
 }

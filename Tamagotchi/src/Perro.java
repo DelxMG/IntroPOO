@@ -1,3 +1,6 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Perro {
     String nombre;
     int edad;
@@ -53,6 +56,43 @@ public class Perro {
         this.nivelHambre = nivelHambre;
     }
 
+    public void interactuarConPerro (Perro perro, Scanner sc) {
+
+        boolean salir = false;
+        int menu;
+
+        try {
+            while (!salir) {
+                System.out.println(perro.getNombre() + "te da una cálida bienvenida");
+                System.out.println("¿Qué quieres hacer?");
+                System.out.println("1.Darle de comer");
+                System.out.println("2. Jugar con " + perro.getNombre());
+                System.out.println("3. Descansar");
+                System.out.println("4. Salir");
+
+                menu = sc.nextInt();
+
+                switch (menu) {
+                    case 1:
+                        perro.comer();
+                        break;
+                    case 2:
+                        perro.jugar();
+                        break;
+                    case 3:
+                        perro.dormir();
+                        break;
+                    case 4:
+                        System.out.println(perro.getNombre() + "espera volver a verte pronto");
+                        salir = true;
+                        break;
+                }
+            }
+        } catch (InputMismatchException e){
+            System.out.println("Tipo de dato no válido");
+            sc.next();
+        }
+    }
 
     public void comer() {
         if (nivelHambre > 20){
@@ -89,16 +129,17 @@ public class Perro {
     }
 
     private void actualizarEstadoAnimo() {
-        if (nivelEnergia <= 0) {
+        if (nivelEnergia <= 30) {
             estadoAnimo = "Cansado";
         } else if (nivelHambre > 40) {
             estadoAnimo = "Hambriento";
-        } else if (nivelEnergia > 50 && nivelHambre < 20) {
+        } else if (nivelEnergia > 50 && nivelHambre <= 20) {
             estadoAnimo = "Feliz";
-        } else if (nivelEnergia > 30 && nivelHambre < 50) {
-            estadoAnimo = "Divertido";
+        } else {
+            estadoAnimo = "Neutral";
         }
     }
+
 
     @Override
     public String toString() {
