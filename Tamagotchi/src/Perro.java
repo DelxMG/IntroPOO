@@ -2,11 +2,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Perro {
-    String nombre;
-    int edad;
-    int nivelEnergia;
-    int nivelHambre;
-    String estadoAnimo;
+    private String nombre;
+    private int edad;
+    private int nivelEnergia;
+    private int nivelHambre;
+    private String estadoAnimo;
 
     public Perro (String nombre, int edad){
         this.nombre = nombre;
@@ -62,12 +62,14 @@ public class Perro {
         int menu;
 
         try {
+
             while (!salir) {
                 System.out.println(perro.getNombre() + "te da una cálida bienvenida");
                 System.out.println("¿Qué quieres hacer?");
                 System.out.println("1.Darle de comer");
                 System.out.println("2. Jugar con " + perro.getNombre());
                 System.out.println("3. Descansar");
+                System.out.println("4. Ver su estado");
                 System.out.println("4. Salir");
 
                 menu = sc.nextInt();
@@ -83,7 +85,10 @@ public class Perro {
                         perro.dormir();
                         break;
                     case 4:
-                        System.out.println(perro.getNombre() + "espera volver a verte pronto");
+                        System.out.println(perro.getEstadoAnimo());
+                        break;
+                    case 5:
+                        System.out.println(perro.getNombre() + " espera volver a verte pronto");
                         salir = true;
                         break;
                 }
@@ -96,47 +101,47 @@ public class Perro {
 
     public void comer() {
         if (nivelHambre > 20){
-            nivelHambre -= 20;
-            System.out.println(nombre + " ha comido y ahora se siente mejor. Su nivel de hambre es de: " + nivelHambre);
+            setNivelHambre(nivelHambre - 20);
+            System.out.println(getNombre() + " ha comido y ahora se siente mejor. Su nivel de hambre es de: " + nivelHambre);
         } else {
-            System.out.println(nombre + " aún no tiene hambre.");
+            System.out.println(getNombre() + " aún no tiene hambre.");
         }
+        actualizarEstadoAnimo();
     }
 
     public void jugar() {
 
         if (nivelEnergia > 0){
 
-            nivelEnergia -= 20;
-            nivelHambre += 20;
-            estadoAnimo = "Divertido";
+            setNivelEnergia(nivelEnergia -20);
+            setNivelHambre(nivelHambre + 20);
 
-            System.out.println(nombre + " esta jugando y se divierte.");
+            System.out.println(getNombre() + " esta jugando y se divierte.");
         } else {
-            estadoAnimo = "Cansado";
-            System.out.println(nombre + " esta demasiado cansado para jugar");
+            System.out.println(getNombre() + " esta demasiado cansado para jugar");
         }
+        actualizarEstadoAnimo();
     }
 
     public void dormir () {
         if (nivelEnergia > 50){
-            System.out.println(nombre + " no está cansado");
+            System.out.println(getNombre() + " no está cansado");
         } else {
             nivelEnergia += 20;
-            estadoAnimo = "Dormido";
-            System.out.println(nombre + " está recargando energías");
+            System.out.println(getNombre() + " está recargando energías");
         }
+        actualizarEstadoAnimo();
     }
 
     private void actualizarEstadoAnimo() {
         if (nivelEnergia <= 30) {
-            estadoAnimo = "Cansado";
+            setEstadoAnimo("Cansado");
         } else if (nivelHambre > 40) {
-            estadoAnimo = "Hambriento";
+            setEstadoAnimo("Hambriento");
         } else if (nivelEnergia > 50 && nivelHambre <= 20) {
-            estadoAnimo = "Feliz";
+            setEstadoAnimo("Feliz");
         } else {
-            estadoAnimo = "Neutral";
+            setEstadoAnimo("Neutral");
         }
     }
 

@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -44,7 +45,7 @@ public class Main {
                 }
             }
 
-        }catch (IncompatibleClassChangeError e){
+        }catch (InputMismatchException e){
             System.out.println("Tipo de dato no válido.");
             sc.next();
         }
